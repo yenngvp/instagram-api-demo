@@ -63,4 +63,8 @@ gen-external-apklibs
 
 gradle.properties
 
+.DS_Store
+vcs.xml
+
+
 # End of https://www.gitignore.io/api/android
