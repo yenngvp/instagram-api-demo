@@ -16,6 +16,8 @@ public final class AppConstants {
                     "&redirect_uri=" + INSTAGRAM_CALLBACK_URL + "&response_type=token";
     public static final String INSTAGRAM_API_BASE_URL = "https://api.instagram.com/";
 
+    public static final int PAGINATION_SIZE = 20;
+
     public class SharedPreference {
         public static final String ACCESS_TOKEN_KEY = "ACCESS_TOKEN";
     }

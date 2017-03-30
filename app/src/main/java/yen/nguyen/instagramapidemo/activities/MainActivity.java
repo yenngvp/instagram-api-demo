@@ -15,11 +15,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import yen.nguyen.instagramapidemo.R;
 import yen.nguyen.instagramapidemo.networking.api.OnNetworkCompleteListener;
 import yen.nguyen.instagramapidemo.networking.model.UserNetworkModel;
+import yen.nguyen.instagramapidemo.storages.AppSharedPreferences;
+import yen.nguyen.instagramapidemo.utils.AppConstants;
 import yen.nguyen.instagramapidemo.utils.Injector;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         drawerLayout.setDrawerListener(mDrawerToggle);
+        initNavView();
+
+
     }
 
     @Override
@@ -119,22 +126,48 @@ public class MainActivity extends AppCompatActivity {
         fullNameTextView = (TextView) headerView.findViewById(R.id.full_name_textView);
         usernameTextView = (TextView) headerView.findViewById(R.id.username_textView);
         userAvatarImageView = (ImageView) headerView.findViewById(R.id.user_avatar_imageView);
-        fullNameTextView.setText("Yen Nguyen");
-        usernameTextView.setText("@yenngvp");
+
+        showMyself();
     }
 
     private void showMyself() {
 
-        Injector.getNetworkService().getMyself(new OnNetworkCompleteListener() {
-            @Override
-            public void onSuccess(Object data) {
-            }
+        String username = AppSharedPreferences.getInstance().getStringByKey("username");
+        if (username != null) {
+            String fullName = AppSharedPreferences.getInstance().getStringByKey("fullName");
+            String profilePicture = AppSharedPreferences.getInstance().getStringByKey("profilePicture");
+            displayAvatar(username, fullName, profilePicture);
+        } else {
+            Injector.getNetworkService().getMyself(new OnNetworkCompleteListener() {
+                @Override
+                public void onSuccess(Object data) {
+                    UserNetworkModel user = (UserNetworkModel) data;
+                    if (data != null) {
+                        String username = user.getData().getUsername();
+                        String fullName = user.getData().getFull_name();
+                        String profilePicture = user.getData().getProfile_picture();
+                        AppSharedPreferences.getInstance().storeString("username", username);
+                        AppSharedPreferences.getInstance().storeString("fullName", fullName);
+                        AppSharedPreferences.getInstance().storeString("profilePicture", profilePicture);
 
-            @Override
-            public void onFailure(String error) {
+                        displayAvatar(username, fullName, profilePicture);
+                    }
+                }
 
-            }
-        });
+                @Override
+                public void onFailure(String error) {
+
+                }
+            });
+        }
+    }
+
+    private void displayAvatar(String username, String fullName, String profilePicture) {
+        fullNameTextView.setText(fullName);
+        usernameTextView.setText(username);
+        if (profilePicture != null) {
+            Picasso.with(MainActivity.this).load(profilePicture).into(userAvatarImageView);
+        }
     }
 
 }

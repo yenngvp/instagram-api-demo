@@ -52,4 +52,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     // Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
+    // Jodatime
+    compile 'net.danlew:android.joda:2.9.4.1'
 }
