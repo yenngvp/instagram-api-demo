@@ -1,4 +1,4 @@
-package yen.nguyen.instagramapidemo.networking.model;
+package yen.nguyen.instagramapidemo.networking.common;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

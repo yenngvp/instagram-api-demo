@@ -1,6 +1,17 @@
 package yen.nguyen.instagramapidemo.fragments.media;
 
 import android.os.Handler;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import yen.nguyen.instagramapidemo.common.PaginationCriteria;
+import yen.nguyen.instagramapidemo.fragments.media.model.MediaItemViewModel;
+import yen.nguyen.instagramapidemo.networking.common.OnNetworkCompleteListener;
+import yen.nguyen.instagramapidemo.utils.AppConstants;
+import yen.nguyen.instagramapidemo.utils.Injector;
+import yen.nguyen.instagramapidemo.utils.LogUtil;
 
 /**
  * Created by yennguyen on 2/22/17.
@@ -8,7 +19,9 @@ import android.os.Handler;
 
 public class MediaListPresenter implements MediaListContract.ActionListener {
 
+
     private MediaListContract.View view;
+    private PaginationCriteria paginationCriteria;
     private boolean isContinuosScrolling;
     private int mediaType = 1;
 
@@ -32,6 +45,7 @@ public class MediaListPresenter implements MediaListContract.ActionListener {
 
     @Override
     public void onLoadMoreDataRequest(int offset, int size, boolean isScrollingDown, int mediaType) {
+        buildPaginationCriteria(offset, size, isScrollingDown);
         isContinuosScrolling = true;
         this.mediaType = mediaType;
         loadMediaFromDatabase();
@@ -39,6 +53,7 @@ public class MediaListPresenter implements MediaListContract.ActionListener {
 
     @Override
     public void refreshDataManually(boolean isContinuousScrolling, int mediaType) {
+        buildPaginationCriteria(0, AppConstants.PAGINATION_SIZE, true);
         isContinuosScrolling = false;
         this.mediaType = mediaType;
         loadMediaFromDatabase();
@@ -52,16 +67,33 @@ public class MediaListPresenter implements MediaListContract.ActionListener {
     private Runnable databaseLoadRunnable = new Runnable() {
         @Override
         public void run() {
-//            List<MediaItemViewModel> medias = databaseService.loadMediaByCriteriaAndTag(paginationCriteria, getTagString());
-//            if (view != null) {
-//                view.showData(medias, isContinuosScrolling, paginationCriteria);
-//            }
+            Injector.getNetworkService().getUserRecentMedia(new OnNetworkCompleteListener() {
+                @Override
+                public void onSuccess(Object data) {
+
+                    List<MediaItemViewModel> mediaList = (List) data;
+                    if (view != null) {
+                        view.showData(mediaList, isContinuosScrolling, paginationCriteria);
+                    }
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    LogUtil.e("SearchMedia failure", error);
+                }
+            });
         }
     };
 
-    @Override
-    @Deprecated
-    public void downloadMedia(String entityId) {
+    private PaginationCriteria buildPaginationCriteria(int offset, int size, boolean isScrollingDown) {
+        paginationCriteria = new PaginationCriteria.Builder()
+                .sortBy("metadata.entityLastModifiedDate")
+                .sortAscending(false)
+                .offset(offset)
+                .size(size)
+                .isScrolledDown(isScrollingDown)
+                .build();
+        return paginationCriteria;
     }
 
 }

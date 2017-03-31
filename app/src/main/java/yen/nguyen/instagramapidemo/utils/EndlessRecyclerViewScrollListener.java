@@ -10,7 +10,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
  */
 
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
-    private int visibleThreshold = 2;
+    private int visibleThreshold = 1;
     private int startingOffset = 0;
     // Number of items per page to load
     private int size = AppConstants.PAGINATION_SIZE;

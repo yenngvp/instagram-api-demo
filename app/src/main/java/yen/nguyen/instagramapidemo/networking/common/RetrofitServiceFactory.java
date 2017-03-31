@@ -1,4 +1,4 @@
-package yen.nguyen.instagramapidemo.networking.api;
+package yen.nguyen.instagramapidemo.networking.common;
 
 import android.content.Context;
 
@@ -19,7 +19,6 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import yen.nguyen.instagramapidemo.networking.model.StringConverter;
 import yen.nguyen.instagramapidemo.utils.AppConstants;
 
 /**

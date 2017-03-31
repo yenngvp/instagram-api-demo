@@ -20,10 +20,11 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import yen.nguyen.instagramapidemo.R;
-import yen.nguyen.instagramapidemo.networking.api.OnNetworkCompleteListener;
+import yen.nguyen.instagramapidemo.fragments.media.MediaListFragment;
+import yen.nguyen.instagramapidemo.networking.common.OnNetworkCompleteListener;
 import yen.nguyen.instagramapidemo.networking.model.UserNetworkModel;
 import yen.nguyen.instagramapidemo.storages.AppSharedPreferences;
-import yen.nguyen.instagramapidemo.utils.AppConstants;
+import yen.nguyen.instagramapidemo.utils.FragmentUtils;
 import yen.nguyen.instagramapidemo.utils.Injector;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.nav_view) NavigationView navView;
 
-    private TextView mTextMessage;
     private ActionBarDrawerToggle mDrawerToggle;
     private TextView fullNameTextView;
     private TextView usernameTextView;
@@ -45,13 +45,11 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    FragmentUtils.addFragment(getSupportFragmentManager(), R.id.content, MediaListFragment.newInstance(1));
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
                     return true;
             }
             return false;
@@ -66,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -87,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(mDrawerToggle);
         initNavView();
 
-
     }
 
     @Override
@@ -95,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         toolbar.setTitle("Instagram API Demo");
+
+        loadData();
     }
 
     @Override
@@ -168,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
         if (profilePicture != null) {
             Picasso.with(MainActivity.this).load(profilePicture).into(userAvatarImageView);
         }
+    }
+
+    private void loadData() {
+        FragmentUtils.addFragment(getSupportFragmentManager(), R.id.content, MediaListFragment.newInstance(1));
     }
 
 }

@@ -1,4 +1,4 @@
-package yen.nguyen.instagramapidemo.networking.model;
+package yen.nguyen.instagramapidemo.networking.common;
 
 import java.text.MessageFormat;
 

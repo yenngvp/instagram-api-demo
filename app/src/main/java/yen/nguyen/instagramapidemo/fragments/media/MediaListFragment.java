@@ -81,7 +81,6 @@ public class MediaListFragment extends BasePresenterFragment<MediaListContract.A
         adapter = new MediaListAdapter(getActivity(), this);
         layoutManager = new LinearLayoutManager(getActivity());
         mediaList.setLayoutManager(layoutManager);
-        mediaList.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         mediaList.setAdapter(adapter);
 
         swipeRefreshLayout.setOnRefreshListener(this);

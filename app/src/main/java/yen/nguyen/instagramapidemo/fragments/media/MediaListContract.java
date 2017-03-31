@@ -15,6 +15,5 @@ public interface MediaListContract {
     interface ActionListener extends BasePresenter<View> {
         void onLoadMoreDataRequest(int offset, int size, boolean isScrollingDown, int mediaType);
         void refreshDataManually(boolean isContinuousScrolling, int mediaType);
-        void downloadMedia(String entityId);
     }
 }

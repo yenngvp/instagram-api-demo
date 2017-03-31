@@ -1,4 +1,4 @@
-package yen.nguyen.instagramapidemo.networking.api;
+package yen.nguyen.instagramapidemo.networking.common;
 
 import android.content.Context;
 

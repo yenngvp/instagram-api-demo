@@ -6,9 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +80,7 @@ public class MediaListAdapter extends RecyclerView.Adapter<MediaListAdapter.Flex
     @Override
     public FlexViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.listview_item, parent, false);
+                .inflate(R.layout.cardview_item, parent, false);
         FlexViewHolder vh = new FlexViewHolder(v);
         return vh;
     }
@@ -90,10 +89,17 @@ public class MediaListAdapter extends RecyclerView.Adapter<MediaListAdapter.Flex
     public void onBindViewHolder(FlexViewHolder holder, int position) {
         MediaItemViewModel item = dataSource.get(position);
 
-    }
-
-    private void bindIconBasedOnMediaType(FlexViewHolder holder, MediaItemViewModel viewModel) {
-
+        if ("image".equals(item.getType()) && item.getImages() != null) {
+            Picasso.with(context).load(item.getImages().getThumbnail().getUrl())
+                    .into(holder.imageViewFeedTop);
+            Picasso.with(context).load(item.getImages().getStandard_resolution().getUrl())
+                    .into(holder.imageViewFeedCenter);
+        } else if ("video".equals(item.getType()) && item.getVideos() != null) {
+            Picasso.with(context).load(item.getVideos().getThumbnail().getUrl())
+                    .into(holder.imageViewFeedTop);
+            Picasso.with(context).load(item.getVideos().getStandard_resolution().getUrl())
+                    .into(holder.imageViewFeedCenter);
+        }
     }
 
     @Override
@@ -103,19 +109,16 @@ public class MediaListAdapter extends RecyclerView.Adapter<MediaListAdapter.Flex
 
     public class FlexViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.row_img) ImageView icon;
-        @BindView(R.id.row_main_title) TextView title;
-        @BindView(R.id.row_sub_content) TextView content;
-        @BindView(R.id.row_img_status) ImageView imgStatus;
-        @BindView(R.id.row_content_layout) LinearLayout contentLayout;
-        @BindView(R.id.download_progressbar)ProgressBar progressBar;
+        @BindView(R.id.ivPostUserProfilePhoto) ImageView imageViewFeedTop;
+        @BindView(R.id.ivFeedCenter) ImageView imageViewFeedCenter;
+        @BindView(R.id.ivLikeIcon) ImageView imageViewFeedBottom;
 
         public FlexViewHolder(final View viewItem) {
             super(viewItem);
 
             ButterKnife.bind(this, viewItem);
 
-            icon.setOnClickListener(new View.OnClickListener() {
+            imageViewFeedCenter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (itemCallback != null) {
@@ -124,43 +127,8 @@ public class MediaListAdapter extends RecyclerView.Adapter<MediaListAdapter.Flex
                     }
                 }
             });
-
-            contentLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (itemCallback != null) {
-                        MediaItemViewModel item = dataSource.get(getAdapterPosition());
-                        itemCallback.onItemClickListener(item, null);
-                    }
-                }
-            });
-
-            imgStatus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (itemCallback != null) {
-                        MediaItemViewModel item = dataSource.get(getAdapterPosition());
-                        itemCallback.onItemDownloadClickListener(item, getAdapterPosition());
-                    }
-                }
-            });
         }
 
-        public ImageView getIcon() {
-            return icon;
-        }
-
-        public TextView getTitle() {
-            return title;
-        }
-
-        public TextView getContent() {
-            return content;
-        }
-
-        public ImageView getImgStatus() {
-            return imgStatus;
-        }
     }
 
     public interface OnItemCallback {

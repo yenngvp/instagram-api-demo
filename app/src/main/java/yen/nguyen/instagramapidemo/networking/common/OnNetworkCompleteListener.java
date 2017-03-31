@@ -1,4 +1,4 @@
-package yen.nguyen.instagramapidemo.networking.api;
+package yen.nguyen.instagramapidemo.networking.common;
 
 /**
  * Created by yen.nguyen on 3/30/17.
