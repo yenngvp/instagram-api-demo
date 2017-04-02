@@ -30,3 +30,8 @@
     @icepick.* <fields>;
 }
 -keepnames class * { @icepick.State *;}
+
+-ignorewarnings
+-keep class * {
+    public private *;
+}
