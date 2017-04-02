@@ -1,9 +1,20 @@
-# Demo implementation of the Instagram API
+## Demo implementation of the Instagram API
 
-Huberger menu:
-![humberger menu](https://drive.google.com/file/d/0B3WRHeX6zfctY1ZzOFFjQVRQaDQ/view)
-![News feed 1](https://drive.google.com/file/d/0B3WRHeX6zfctUE9HS2dVUC1pclU/view)
-![News feed 2](https://drive.google.com/file/d/0B3WRHeX6zfctbUZReGNRTEtRc1k/view)
-![Image view](https://drive.google.com/open?id=0B3WRHeX6zfctdDQ4MzRFYUlOUU0)
-![icon ](https://github.com/yenngvp/instagram-api-demo/blob/master/app/src/main/res/drawable/avatar_sm.png)
-# LICENSE: GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.pdf
+Humberger menu:
+![humberger menu](https://github.com/yenngvp/instagram-api-demo/blob/master/app/src/main/res/raw/Screenshot_0.jpg)
+News feed1:
+![News feed 1](https://github.com/yenngvp/instagram-api-demo/blob/master/app/src/main/res/raw/Screenshot_1.jpg)
+![News feed 2](https://github.com/yenngvp/instagram-api-demo/blob/master/app/src/main/res/raw/Screenshot_2.jpg)
+Image view
+![Image view](https://github.com/yenngvp/instagram-api-demo/blob/master/app/src/main/res/raw/Screenshot_3.jpg)
+
+## Build
+- To build project you need Android Studio installed.
+- Create a new gradle.properties file and place it in the root folder of the project
+- Add your Instagram's CLIENT_ID, CLIENT_SECRET and CALLBACK_URL to the gradle.properties file:
+INSTAGRAM_CLIENT_ID = [your instagram client id]
+INSTAGRAM_CLIENT_SECRET = [your instagram client_secret]
+INSTAGRAM_CALLBACK_URL = [your instagram callback url]
+- Now you are ready to go
+
+## LICENSE: GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.pdf
