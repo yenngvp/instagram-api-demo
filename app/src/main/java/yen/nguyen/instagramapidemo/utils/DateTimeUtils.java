@@ -52,7 +52,7 @@ public class DateTimeUtils {
                 if (!dt.isBefore(midnightYesterday)) {
                     return "Yesterday " + FORMAT_SIMPLE_HHMM_24.print(dt);
                 } else {
-                    return FORMATTER_WITH_TZ_SIMPLE.print(dt);
+                    return FORMAT_SIMPLE_HHMM_24.print(dt);
                 }
             }
         }

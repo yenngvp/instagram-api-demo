@@ -1,6 +1,8 @@
 package yen.nguyen.instagramapidemo.fragments.media;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import yen.nguyen.instagramapidemo.R;
+import yen.nguyen.instagramapidemo.activities.ViewMediaActivity;
 import yen.nguyen.instagramapidemo.common.BasePresenterFragment;
 import yen.nguyen.instagramapidemo.common.PaginationCriteria;
 import yen.nguyen.instagramapidemo.common.PresenterFactory;
@@ -128,11 +131,17 @@ public class MediaListFragment extends BasePresenterFragment<MediaListContract.A
 
     @Override
     public void onItemClickListener(MediaItemViewModel item, String name) {
-//        Intent intent;
-//        intent = new Intent(getActivity(), OpenMediaActivity.class);
-//        intent.putExtra("entityId", item.getEntityId());
-//        intent.putExtra("fileName", name);
-//        startActivity(intent);
+        Intent intent;
+        intent = new Intent(getActivity(), ViewMediaActivity.class);
+        if (item.isImage()) {
+            intent.putExtra("url", item.getImages().getStandard_resolution().getUrl());
+        } else if (item.isVideo()) {
+            intent.putExtra("url", item.getVideos().getStandard_resolution().getUrl());
+        }
+        intent.putExtra("type", item.getType());
+        intent.putExtra("title", name);
+
+        startActivity(intent);
     }
 
     @Override

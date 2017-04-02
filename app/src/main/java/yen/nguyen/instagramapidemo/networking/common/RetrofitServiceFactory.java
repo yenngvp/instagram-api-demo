@@ -38,7 +38,7 @@ public class RetrofitServiceFactory {
     private static OkHttpClient getHttpClient(final Context context) {
         if (httpClient == null) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
             OkHttpClient.Builder okClientBuilder = new OkHttpClient.Builder();
 

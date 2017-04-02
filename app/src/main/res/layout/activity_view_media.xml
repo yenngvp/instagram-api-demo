@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorInstagramPurpleViolet"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/close_image_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="bottom|left"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/videoView"
+        android:layout_toRightOf="@+id/videoView"
+        android:background="@null"
+        android:src="@drawable/ic_close"
+        app:layout_anchorGravity="bottom|right|end" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"
+        android:id="@+id/loading_layout">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/download_progressbar"
+            android:indeterminate="false"
+            android:max="100"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/message"
+            android:layout_below="@id/download_progressbar"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/text_size16sp"
+            android:text="ABC"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/media_view_relative_layout">
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/videoView"
+            android:layout_toEndOf="@+id/videoView" />
+
+        <VideoView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/videoView"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

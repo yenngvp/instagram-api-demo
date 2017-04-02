@@ -1,6 +1,9 @@
 package yen.nguyen.instagramapidemo.activities;
 
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -25,6 +29,7 @@ import yen.nguyen.instagramapidemo.networking.common.OnNetworkCompleteListener;
 import yen.nguyen.instagramapidemo.networking.model.UserNetworkModel;
 import yen.nguyen.instagramapidemo.storages.AppSharedPreferences;
 import yen.nguyen.instagramapidemo.utils.FragmentUtils;
+import yen.nguyen.instagramapidemo.utils.ImageUtil;
 import yen.nguyen.instagramapidemo.utils.Injector;
 
 public class MainActivity extends AppCompatActivity {
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         };
         drawerLayout.setDrawerListener(mDrawerToggle);
         initNavView();
-
+        loadData();
     }
 
     @Override
@@ -91,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         toolbar.setTitle("Instagram API Demo");
-
-        loadData();
     }
 
     @Override
@@ -164,12 +167,25 @@ public class MainActivity extends AppCompatActivity {
         fullNameTextView.setText(fullName);
         usernameTextView.setText(username);
         if (profilePicture != null) {
-            Picasso.with(MainActivity.this).load(profilePicture).into(userAvatarImageView);
+            Picasso.with(MainActivity.this).load(profilePicture).into(userAvatarImageView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    Drawable drawable = userAvatarImageView.getDrawable();
+                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+                    userAvatarImageView.setImageBitmap(ImageUtil.getRoundedCornerBitmap(bitmap, 100));
+                }
+
+                @Override
+                public void onError() {
+
+                }
+            });
         }
     }
 
     private void loadData() {
         FragmentUtils.addFragment(getSupportFragmentManager(), R.id.content, MediaListFragment.newInstance(1));
     }
+
 
 }
