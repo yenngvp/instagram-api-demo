@@ -119,7 +119,11 @@ public class MediaListAdapter extends RecyclerView.Adapter<MediaListAdapter.Flex
         holder.uploadTimeTextView.setText(DateTimeUtils.printWithHumanReadableAndTz(new DateTime(item.getCreatedTime(), DateTimeZone.UTC)));
         Picasso.with(context).load(item.getImages().getStandard_resolution().getUrl())
                 .into(holder.feedCenterImageView);
-
+        if (item.isVideo()) {
+            holder.playImageView.setVisibility(View.VISIBLE);
+        } else {
+            holder.playImageView.setVisibility(View.GONE);
+        }
         if (item.isUserHasLiked()) {
             holder.likeIconImageView.setImageResource(R.drawable.ic_heart_red);
         } else {
@@ -141,6 +145,7 @@ public class MediaListAdapter extends RecyclerView.Adapter<MediaListAdapter.Flex
         @BindView(R.id.tvLocation) TextView uploadLocationTextView;
         @BindView(R.id.tvUploadTime) TextView uploadTimeTextView;
         @BindView(R.id.ivFeedCenter) ImageView feedCenterImageView;
+        @BindView(R.id.ivPlay) ImageView playImageView;
         @BindView(R.id.ivLikeIcon) ImageView likeIconImageView;
         @BindView(R.id.tvLikeCount) TextView likeCountTextView;
         @BindView(R.id.tvCommentCount) TextView commentCountTextView;
