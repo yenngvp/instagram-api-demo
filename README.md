@@ -18,4 +18,5 @@ Image view
     INSTAGRAM_CALLBACK_URL = [your instagram callback url]`
 - Now you are ready to go
 
+
 ## LICENSE: GPLv3 https://www.gnu.org/licenses/gpl.html
