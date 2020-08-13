@@ -19,4 +19,4 @@ Image view
 - Now you are ready to go
 
 
-## LICENSE: GPLv3 https://www.gnu.org/licenses/gpl.html
+## LICENSE: MIT
